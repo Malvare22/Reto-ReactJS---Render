@@ -3,12 +3,14 @@ import PowerSettingsNewIcon from '@mui/icons-material/PowerSettingsNew';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import ArrowDropDownOutlinedIcon from '@mui/icons-material/ArrowDropDownOutlined';
 import ArrowDropUpOutlinedIcon from '@mui/icons-material/ArrowDropUpOutlined';
-import React, { SetStateAction, useState } from "react";
+import React, { SetStateAction, useContext, useState } from "react";
 import { Service } from "../../type/Service";
+import { AddService } from "./AddService";
+import { ServicesModalContext } from "../../context/ServicesModalContext";
 
 interface ServiceCardProps{
     index: number,
-    subIndex?: number,
+    subIndex: number,
     services: Service[],
     setServices: React.Dispatch<SetStateAction<Service[]>>
     layer: number
@@ -17,6 +19,18 @@ interface ServiceCardProps{
 export const ServiceCard: React.FC<ServiceCardProps> = ({services, setServices, layer, index, subIndex}) => {
 
     const [open, setOpen] = useState(false);
+
+    const {setIndexForService, setViewModal, setModalType} = useContext(ServicesModalContext);
+
+    const handleAdd = () => {
+        setIndexForService({i:index, j:-1});
+    }
+
+    const handleEdit = () => {
+        setIndexForService({i:index, j:subIndex});
+        setModalType(1);
+        setViewModal(true);
+    }
 
     const service = () => {
         if(layer == 0){
@@ -52,7 +66,9 @@ export const ServiceCard: React.FC<ServiceCardProps> = ({services, setServices, 
                 <Grid item>
                     <Grid container justifyContent={'space-between'} columnSpacing={1}>
                         <Grid item>
-                            <EditOutlinedIcon></EditOutlinedIcon>
+                            <div onClick={handleEdit}>
+                                <EditOutlinedIcon></EditOutlinedIcon>
+                            </div>
                         </Grid>
                         <Grid item>
                             <div onClick={handleRemove}><PowerSettingsNewIcon></PowerSettingsNewIcon></div>
@@ -68,11 +84,13 @@ export const ServiceCard: React.FC<ServiceCardProps> = ({services, setServices, 
                 </Grid>
             </Grid>
         </Card>
-        <div style={{marginLeft: 22}}>{(layer == 0 && open) && service().subServices?.map(
-            (s, j) => {
-                return <ServiceCard services={services} setServices={setServices} layer={1} index={index} subIndex={j} key={s.id}></ServiceCard>
-            } 
-        )
-        }</div>
+        {(layer == 0 && open) && <div style={{marginLeft: 22}}>
+            <div onClick={handleAdd}><AddService></AddService></div>
+            {service().subServices?.map(
+                (s, j) => {
+                    return <ServiceCard services={services} setServices={setServices} layer={1} index={index} subIndex={j} key={s.id}></ServiceCard>
+                } 
+            )
+        }</div>}
     </>
     };

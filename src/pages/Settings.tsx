@@ -2,18 +2,20 @@ import { Container, Grid } from "@mui/material";
 import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined';
 import AssignmentReturnIcon from '@mui/icons-material/AssignmentReturn';
 import { ServiceCard } from "./Components/ServiceCard";
-import React, { SetStateAction, useEffect, useState } from "react";
+import React, { SetStateAction, useContext, useEffect, useState } from "react";
 import { Service } from "../type/Service";
 import { fetchCSV } from "../utilities/readCSV";
 import ServicesModal from "./Components/Modal";
 import { ServicesModalContext } from "../context/ServicesModalContext";
 import { AddService } from "./Components/AddService";
+import { IndexForService } from "../type/IndexForService";
 
 export default function Settings(){
 
     const [services, setServices] = useState<Service[]>();
     const [viewModal, setViewModal] = useState(false);
-    const [serviceModal, setServiceModal] = useState<Service | null>(null);
+    const [modalType, setModalType] = useState(0);
+    const [indexForService, setIndexForService] = useState<IndexForService | null>(null);
     const ModalContext = ServicesModalContext;
 
     useEffect(
@@ -27,8 +29,8 @@ export default function Settings(){
     )
 
     return<Container>
-        <ModalContext.Provider value={{viewModal, setViewModal, serviceModal, setServiceModal}}>
-            <ServicesModal></ServicesModal>
+        <ModalContext.Provider value={{viewModal, setViewModal, setIndexForService, modalType, setModalType}}>
+            <ServicesModal services={services}></ServicesModal>
             <Grid container justifyContent={'space-between'}>
                 <Grid item style={{color: '#000000', fontSize: '18px', fontWeight: 'bold'}}>EDICIÓN DE CATÁLOGO</Grid>
                 <Grid item>
@@ -54,7 +56,12 @@ interface ServicesContainerProps{
 
 const ServicesContainer: React.FC<ServicesContainerProps> = ({services, setServices}) => {
 
+    const {setIndexForService, setModalType} = useContext(ServicesModalContext);
 
+    const handleAdd = () => {
+        setIndexForService({i:-1, j:-1});
+        setModalType(0);
+    }
 
     return<div style={{padding: 12, border: 'solid 1px black'}}>
         <Grid container alignContent={'center'} style={{backgroundColor: '#0047BA', color: '#FFFFFF', height:50, paddingLeft: 22}}>
@@ -62,11 +69,11 @@ const ServicesContainer: React.FC<ServicesContainerProps> = ({services, setServi
                 Catálogo de Servicios
             </div>
         </Grid>
-        <AddService></AddService>
+        <div onClick={handleAdd}><AddService></AddService></div>
         <Grid container style={{paddingLeft: 22}}>
             {services && services.map(
                 (s, i) => {
-                    return <Grid item xs={12}><ServiceCard index={i} services={services} setServices={setServices} layer={0} key={s.id}></ServiceCard></Grid>;
+                    return <Grid item xs={12}><ServiceCard index={i} subIndex={-1} services={services} setServices={setServices} layer={0} key={s.id}></ServiceCard></Grid>;
                 }
             )}
         </Grid>

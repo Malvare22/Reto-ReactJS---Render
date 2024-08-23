@@ -5,15 +5,14 @@ import { ServicesModalContext } from "../../context/ServicesModalContext";
 
 export const AddService = () => {
 
-    const {setViewModal, setServiceModal} = useContext(ServicesModalContext);
+    const {setViewModal} = useContext(ServicesModalContext);
 
     const handleButton = () => {
-        setServiceModal(null);
         setViewModal(true);
     }
 
     return <div onClick={handleButton}>
-        <Grid container alignItems={'center'} style={{color: '#31C462', height:50, paddingLeft: 22, cursor: 'pointer'}}>
+        <Grid container alignItems={'center'} style={{color: '#31C462', height:50, cursor: 'pointer'}}>
             <Grid item>
                 <AddIcon style={{fill: '#31C462'}}></AddIcon>
             </Grid>

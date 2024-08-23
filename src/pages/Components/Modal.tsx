@@ -6,6 +6,9 @@ import Modal from '@mui/material/Modal';
 import { DialogTitle, Grid, IconButton, TextField } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import { ServicesModalContext } from '../../context/ServicesModalContext';
+import { Service } from '../../type/Service';
+import { getNextId } from '../../utilities/getNextId';
+import { IndexForService } from '../../type/IndexForService';
 
 
 const style = {
@@ -20,9 +23,39 @@ const style = {
   p: 4,
 };
 
-export default function ServicesModal() {
+interface ServicesModalProps{
+  services: Service[],
+} 
+
+/**
+ * mModalType = 0 (create), 1 (edit)
+ */
+const ServicesModal:React.FC<ServicesModalProps> = ({services}) => {
   
-  const {viewModal, setViewModal, serviceModal} = React.useContext(ServicesModalContext);
+  const {viewModal, setViewModal, modalType, indexForService} = React.useContext(ServicesModalContext);
+
+  const [service, setService] = React.useState<Service>();
+
+  React.useEffect(
+
+    () => {
+      if(modalType == 0){
+        setService({
+          id: 0,
+          description: '',
+          name: ''
+        })
+      }
+      else{
+        if(indexForService.j == -1){
+          setService(services[indexForService.i]);
+        }
+        else{
+          setService(services[indexForService.i].subServices[indexForService.j]);
+        }
+      }
+    }, []
+  )
 
   const handleClose = () => setViewModal(false);
 
@@ -48,7 +81,7 @@ export default function ServicesModal() {
         </IconButton>
           <Grid container rowSpacing={3} style={{marginTop: 10}}>
             <Grid container rowSpacing={6}>
-                <Grid item xs={12} justifyContent={'center'} style={{color: '#262626', fontSize: 20, textAlign: 'center'}}>Agregar categoría - Servicio</Grid>
+                <Grid item xs={12} justifyContent={'center'} style={{color: '#262626', fontSize: 20, textAlign: 'center'}}>{modalType == 0? 'Agregar categoría - Servicio': 'Editar categoría - Servicio'}</Grid>
                 <Grid item xs={12}>
                     <TextField
                         required
@@ -80,3 +113,5 @@ export default function ServicesModal() {
     </div>
   );
 }
+
+export default ServicesModal;
