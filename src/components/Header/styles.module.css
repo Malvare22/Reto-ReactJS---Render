@@ -1,0 +1,13 @@
+.logo{
+    svg{
+        fill: #0047BA;
+    }
+}
+
+.list{
+    svg{
+        fill: #0047BA;
+        height: 32px;
+        width: 32px;
+    }
+}

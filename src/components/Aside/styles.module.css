@@ -1,0 +1,19 @@
+
+.option{
+    color: #4B5468;
+    font-size: 14px;
+
+    svg{
+        width: 32px;
+        height: 32px;
+    }
+}
+
+.option:hover{
+    background-color: #0047BA;
+    *{
+        color: #FFDD00;
+        fill: #FFDD00;
+        background-color: #0047BA;
+    }
+}
