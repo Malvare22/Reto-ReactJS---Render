@@ -4,9 +4,15 @@ import PowerSettingsNewIcon from '@mui/icons-material/PowerSettingsNew';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import ArrowDropDownOutlinedIcon from '@mui/icons-material/ArrowDropDownOutlined';
 import ArrowDropUpOutlinedIcon from '@mui/icons-material/ArrowDropUpOutlined';
-import { useState } from "react";
+import React, { useState } from "react";
+import { Service } from "../../type/Service";
 
-export const Service = () => {
+interface ServiceCardProps{
+    service: Service,
+    layer: number
+}
+
+export const ServiceCard: React.FC<ServiceCardProps> = ({service, layer}) => {
 
     const [open, setOpen] = useState(false);
 
@@ -18,7 +24,7 @@ export const Service = () => {
         <Card>
             <Grid container alignItems={'center'} justifyContent={'space-between'} style={{color: '#616060D1', height:50, paddingLeft: 22, paddingRight: 12}}>
                 <Grid item>
-                    Nombre de la categoría - Servicio
+                    {service.name}
                 </Grid>
                 <Grid item>
                     <Grid container justifyContent={'space-between'} columnSpacing={1}>
