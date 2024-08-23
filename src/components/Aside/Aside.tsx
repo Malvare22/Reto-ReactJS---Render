@@ -8,8 +8,7 @@ import SettingsSuggestOutlinedIcon from '@mui/icons-material/SettingsSuggestOutl
 
 export default function Aside(){
 
-    return <Grid container xs={2}>
-        <Card style={{padding: 10}}>
+    return <Card style={{padding: 10}}>
             <Grid container rowSpacing={2}>
                 <Option text='DASHBOARD' icon={<HomeIcon/>}/>
                 <Option text='TICKETS' icon={<FormatListBulletedOutlinedIcon/>}/>
@@ -17,7 +16,6 @@ export default function Aside(){
                 <Option text='CONFIGURACIÓN' icon={<SettingsSuggestOutlinedIcon/>}/>
             </Grid>
         </Card>
-    </Grid>
 }
 
 interface OptionProps{
