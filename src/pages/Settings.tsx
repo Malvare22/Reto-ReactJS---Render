@@ -66,7 +66,7 @@ const ServicesContainer: React.FC<ServicesContainerProps> = ({services, setServi
         <Grid container style={{paddingLeft: 22}}>
             {services && services.map(
                 (s, i) => {
-                    return <Grid item xs={12}><ServiceCard index={i} service={s} setServices={setServices} layer={0} key={s.id}></ServiceCard></Grid>;
+                    return <Grid item xs={12}><ServiceCard index={i} services={services} setServices={setServices} layer={0} key={s.id}></ServiceCard></Grid>;
                 }
             )}
         </Grid>
