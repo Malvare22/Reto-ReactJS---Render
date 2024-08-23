@@ -1,40 +1,49 @@
 import { Container, Grid } from "@mui/material";
 import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined';
 import AssignmentReturnIcon from '@mui/icons-material/AssignmentReturn';
-import { AddService, ServiceCard } from "./Components/ServiceCard";
+import { ServiceCard } from "./Components/ServiceCard";
 import React, { SetStateAction, useEffect, useState } from "react";
 import { Service } from "../type/Service";
 import { fetchCSV } from "../utilities/readCSV";
+import ServicesModal from "./Components/Modal";
+import { ServicesModalContext } from "../context/ServicesModalContext";
+import { AddService } from "./Components/AddService";
 
 export default function Settings(){
 
-    const [services, setServices] = useState<Service[]>([]);
+    const [services, setServices] = useState<Service[]>();
+    const [viewModal, setViewModal] = useState(false);
+    const [serviceModal, setServiceModal] = useState<Service | null>(null);
+    const ModalContext = ServicesModalContext;
 
     useEffect(
         () => {
             const f = async () =>{
                 const buffer = await fetchCSV()
-                if(buffer) setServices(buffer);
+                if(buffer) setServices(buffer.slice(0, 6));
             }
             f();
         }, []
     )
 
     return<Container>
-        <Grid container justifyContent={'space-between'}>
-            <Grid item style={{color: '#000000', fontSize: '18px', fontWeight: 'bold'}}>EDICIÓN DE CATÁLOGO</Grid>
-            <Grid item>
-                <Grid container style={{color: '#000000', fontSize: '18px', fontWeight: 'bold'}}>
-                    <Grid item>
-                        <SaveOutlinedIcon style={{fill: '#595959'}}></SaveOutlinedIcon>
-                    </Grid>
-                    <Grid item>
-                        <AssignmentReturnIcon style={{fill: '#0047BA'}}></AssignmentReturnIcon>
+        <ModalContext.Provider value={{viewModal, setViewModal, serviceModal, setServiceModal}}>
+            <ServicesModal></ServicesModal>
+            <Grid container justifyContent={'space-between'}>
+                <Grid item style={{color: '#000000', fontSize: '18px', fontWeight: 'bold'}}>EDICIÓN DE CATÁLOGO</Grid>
+                <Grid item>
+                    <Grid container style={{color: '#000000', fontSize: '18px', fontWeight: 'bold'}}>
+                        <Grid item>
+                            <SaveOutlinedIcon style={{fill: '#595959'}}></SaveOutlinedIcon>
+                        </Grid>
+                        <Grid item>
+                            <AssignmentReturnIcon style={{fill: '#0047BA'}}></AssignmentReturnIcon>
+                        </Grid>
                     </Grid>
                 </Grid>
             </Grid>
-        </Grid>
-        <ServicesContainer services={services} setServices={setServices}></ServicesContainer>
+            <ServicesContainer services={services} setServices={setServices}></ServicesContainer>
+        </ModalContext.Provider>
     </Container>;
 }
 
@@ -44,6 +53,9 @@ interface ServicesContainerProps{
 }
 
 const ServicesContainer: React.FC<ServicesContainerProps> = ({services, setServices}) => {
+
+
+
     return<div style={{padding: 12, border: 'solid 1px black'}}>
         <Grid container alignContent={'center'} style={{backgroundColor: '#0047BA', color: '#FFFFFF', height:50, paddingLeft: 22}}>
             <div>
@@ -51,10 +63,10 @@ const ServicesContainer: React.FC<ServicesContainerProps> = ({services, setServi
             </div>
         </Grid>
         <AddService></AddService>
-        <Grid item>
-            {services.map(
+        <Grid container style={{paddingLeft: 22}}>
+            {services && services.map(
                 (s, i) => {
-                    if(i < 5) return <ServiceCard service={s} layer={0} key={i}></ServiceCard>;
+                    return <Grid item xs={12}><ServiceCard index={i} service={s} setServices={setServices} layer={0} key={s.id}></ServiceCard></Grid>;
                 }
             )}
         </Grid>

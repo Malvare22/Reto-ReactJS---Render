@@ -5,6 +5,7 @@ import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import { DialogTitle, Grid, IconButton, TextField } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
+import { ServicesModalContext } from '../../context/ServicesModalContext';
 
 
 const style = {
@@ -20,14 +21,15 @@ const style = {
 };
 
 export default function ServicesModal() {
-  const [open, setOpen] = React.useState(true);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  
+  const {viewModal, setViewModal, serviceModal} = React.useContext(ServicesModalContext);
+
+  const handleClose = () => setViewModal(false);
 
   return (
     <div>
       <Modal
-        open={open}
+        open={viewModal}
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"

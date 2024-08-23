@@ -1,24 +1,30 @@
 import { Card, Grid } from "@mui/material"
-import AddIcon from '@mui/icons-material/Add';
 import PowerSettingsNewIcon from '@mui/icons-material/PowerSettingsNew';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import ArrowDropDownOutlinedIcon from '@mui/icons-material/ArrowDropDownOutlined';
 import ArrowDropUpOutlinedIcon from '@mui/icons-material/ArrowDropUpOutlined';
-import React, { useState } from "react";
+import React, { SetStateAction, useState } from "react";
 import { Service } from "../../type/Service";
 
 interface ServiceCardProps{
+    index: number,
+    subIndex?: number,
     service: Service,
+    setServices: React.Dispatch<SetStateAction<Service[]>>
     layer: number
 }
 
-export const ServiceCard: React.FC<ServiceCardProps> = ({service, layer}) => {
+export const ServiceCard: React.FC<ServiceCardProps> = React.memo(({service, setServices, layer}) => {
 
     const [open, setOpen] = useState(false);
 
     const handleOpen = () => {
         setOpen(!open);
     }
+
+    const handleRemove = () => {
+        // setService(null);
+    };
 
     return <>
         <Card>
@@ -32,30 +38,26 @@ export const ServiceCard: React.FC<ServiceCardProps> = ({service, layer}) => {
                             <EditOutlinedIcon></EditOutlinedIcon>
                         </Grid>
                         <Grid item>
-                            <PowerSettingsNewIcon></PowerSettingsNewIcon>
+                            <div onClick={handleRemove}><PowerSettingsNewIcon></PowerSettingsNewIcon></div>
                         </Grid>
-                        <Grid item>
+                        {layer == 0 && <Grid item>
                             <div onClick={handleOpen}>
                                 {
                                     open ? <ArrowDropDownOutlinedIcon/> : <ArrowDropUpOutlinedIcon/>
                                 }
                             </div>
-                        </Grid>
+                        </Grid>}
                     </Grid>
                 </Grid>
             </Grid>
         </Card>
+        <div style={{marginLeft: 22}}>{(layer == 0 && open) && service.subServices?.map(
+            (s, i) => {
+                return <ServiceCard service={s} layer={1} key={s.id}></ServiceCard>
+            } 
+        )
+        }</div>
     </>
-}
-
-export const AddService = () => {
-    return <Grid container alignItems={'center'} style={{color: '#31C462', height:50, paddingLeft: 22, cursor: 'pointer'}}>
-            <Grid item>
-                <AddIcon style={{fill: '#31C462'}}></AddIcon>
-            </Grid>
-            <Grid item>
-                Agregar categoría / servicio
-            </Grid>
-            {/* <ServicesModal></ServicesModal> */}
-    </Grid>
-}
+    }, (prevProps, nextProps) => {
+        return prevProps.name === nextProps.name;
+});
