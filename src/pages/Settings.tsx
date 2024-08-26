@@ -11,6 +11,7 @@ import { IndexForService } from "../type/IndexForService";
 import { createService, initModal } from "../utilities/modal";
 import { PlusService } from "./Components/PlusService";
 import Breadcrumb from "./Components/Breadcrumb";
+import FileModal from "./Components/FileModal/FileModal";
 
 /**
  * El parametro type designa el tipo de modal que se va a emplear: 0 (registro) o 1 (editar)
@@ -36,6 +37,7 @@ export default function Settings(){
 
     return<Container>
         <ModalContext.Provider value={{viewModal, setViewModal, indexForService, setIndexForService, modalType, setModalType}}>
+            <FileModal services={services} setServices={setServices}/>
             <ServicesModal services={services} setServices={setServices}></ServicesModal>
             <Grid container justifyContent={'space-between'}>
                 <Grid item style={{color: '#000000', fontSize: '18px', fontWeight: 'bold'}}>EDICIÓN DE CATÁLOGO</Grid>
