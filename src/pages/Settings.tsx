@@ -10,6 +10,7 @@ import { ServicesModalContext } from "../context/ServicesModalContext";
 import { IndexForService } from "../type/IndexForService";
 import { createService, initModal } from "../utilities/modal";
 import { PlusService } from "./Components/PlusService";
+import Breadcrumb from "./Components/Breadcrumb";
 
 /**
  * El parametro type designa el tipo de modal que se va a emplear: 0 (registro) o 1 (editar)
@@ -40,11 +41,11 @@ export default function Settings(){
                 <Grid item style={{color: '#000000', fontSize: '18px', fontWeight: 'bold'}}>EDICIÓN DE CATÁLOGO</Grid>
                 <Grid item>
                     <Grid container style={{color: '#000000', fontSize: '18px', fontWeight: 'bold'}}>
-                        <Grid item>
-                            <SaveOutlinedIcon style={{fill: '#595959'}}></SaveOutlinedIcon>
-                        </Grid>
-                        <Grid item>
+                        <Grid item style={{cursor: 'pointer'}}>
                             <AssignmentReturnIcon style={{fill: '#0047BA'}}></AssignmentReturnIcon>
+                        </Grid>
+                        <Grid item style={{cursor: 'pointer'}}>
+                            <SaveOutlinedIcon style={{fill: '#595959'}}></SaveOutlinedIcon>
                         </Grid>
                     </Grid>
                 </Grid>
@@ -63,7 +64,7 @@ const ServicesContainer: React.FC<ServicesContainerProps> = ({services, setServi
 
     const {setIndexForService , setModalType, setViewModal} = useContext(ServicesModalContext);
 
-    return<div style={{padding: 12, border: 'solid 1px black'}}>
+    return<div style={{padding: 12, border: 'solid 1px black', backgroundColor: '#FFFFFF'}}>
         <Grid container alignContent={'center'} style={{backgroundColor: '#0047BA', color: '#FFFFFF', height:50, paddingLeft: 22}}>
             <div>
                 Catálogo de Servicios

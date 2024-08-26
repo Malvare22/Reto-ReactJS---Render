@@ -8,7 +8,7 @@ import SettingsSuggestOutlinedIcon from '@mui/icons-material/SettingsSuggestOutl
 
 export default function Aside(){
 
-    return <Card style={{padding: 10}}>
+    return <Card style={{padding: 10, height: '100%'}}>
             <Grid container rowSpacing={2}>
                 <Option text='DASHBOARD' icon={<HomeIcon/>}/>
                 <Option text='TICKETS' icon={<FormatListBulletedOutlinedIcon/>}/>

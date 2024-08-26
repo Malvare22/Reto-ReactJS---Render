@@ -7,7 +7,7 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 export default function Header(){
 
     return <>
-    <Grid container style={{border: 'solid 1px black', padding: 6}} justifyContent={'space-between'} alignContent={'center'}>
+    <Grid container style={{border: 'solid 1px black', padding: 6, backgroundColor: '#FFFFFF'}} justifyContent={'space-between'} alignContent={'center'}>
         <Grid item alignContent={'center'}>
             <Grid container spacing={2}>
                 <Grid item>
