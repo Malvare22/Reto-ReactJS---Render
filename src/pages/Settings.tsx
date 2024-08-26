@@ -73,7 +73,7 @@ const ServicesContainer: React.FC<ServicesContainerProps> = ({services, setServi
 
     const {setIndexForService , setModalType, setViewModal} = useContext(ServicesModalContext);
 
-    return<div style={{padding: 12, border: 'solid 1px black', backgroundColor: '#FFFFFF'}}>
+    return<div style={{padding: 12, backgroundColor: '#FFFFFF'}}>
         <Grid container alignContent={'center'} style={{backgroundColor: '#0047BA', color: '#FFFFFF', height:50, paddingLeft: 22}}>
             <div>
                 Catálogo de Servicios

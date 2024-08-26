@@ -17,3 +17,17 @@
         background-color: #0047BA;
     }
 }
+
+.container{
+    padding: 10px;
+    height: 100%;
+    position: relative;
+}
+
+.img{
+    position: absolute;
+    bottom: 10px;
+    left: 103px;
+    width: 100px;
+    transform: rotateY(180deg);
+}

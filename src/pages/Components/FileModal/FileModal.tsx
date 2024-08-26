@@ -15,6 +15,8 @@ import styles from './style.module.css'
 import { processCSV } from '../../../utilities/readCSV';
 import { convertToCSV } from '../../../utilities/convertToCSV';
 import { downloadCSV } from '../../../utilities/downloadCSV';
+import CSV from '../../../assets/svg/CSV';
+import Excel from '../../../assets/svg/Excel';
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -63,13 +65,17 @@ const FileModal : React.FC<FileModalProps> = ({services, setServices, open, setO
     }
   }
 
-  const handleButtonDownload = () => {
+  const handleButtonDownloadCSV = () => {
+    downloadCSV(convertToCSV(services));
+  };
+
+  const handleButtonDownloadExcel = () => {
     downloadCSV(convertToCSV(services));
   };
 
   const handleClose = () => setOpen(false);
 
-  return <div>
+  return <div className={styles.container}>
       <Modal
         open={open}
         onClose={handleClose}
@@ -88,7 +94,7 @@ const FileModal : React.FC<FileModalProps> = ({services, setServices, open, setO
         >
           <CloseIcon />
         </IconButton>
-        <Grid container justifyContent={'center'}>
+        <Grid container justifyContent={'center'} rowSpacing={4}>
             <Grid item xs={12}>
               <Grid container>
                 <Grid item xs={12}>
@@ -114,9 +120,18 @@ const FileModal : React.FC<FileModalProps> = ({services, setServices, open, setO
                       <div className={styles.tittle}>Exportar</div>
                     </Grid>
                     <Grid item xs={12}>
-                      <div className={styles.downloadFile}>
-                        {<div onClick={handleButtonDownload}><InputLayoutWithIcon/></div>}
-                      </div>
+                      <Grid container rowSpacing={3}>
+                        <Grid item xs={12}>
+                          <div>
+                            {<div onClick={handleButtonDownloadExcel}><InputLayoutWithIcon label='Plantilla.Excel' svgElement={<Excel></Excel>}/></div>}
+                          </div>
+                        </Grid>
+                        <Grid item xs={12}>
+                          <div>
+                            {<div onClick={handleButtonDownloadCSV}><InputLayoutWithIcon label='Plantilla.Csv' svgElement={<CSV></CSV>}/></div>}
+                          </div>
+                        </Grid>
+                      </Grid>
                     </Grid>
                   </Grid>
             </Grid>
