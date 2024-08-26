@@ -9,13 +9,18 @@ import ServicesModal from "./Components/Modal";
 import { ServicesModalContext } from "../context/ServicesModalContext";
 import { AddService } from "./Components/AddService";
 import { IndexForService } from "../type/IndexForService";
+import { createService, initModal } from "../utilities/modal";
 
+/**
+ * El parametro type designa el tipo de modal que se va a emplear: 0 (registro) o 1 (editar)
+ * Adicionalmente de envían las coordenadas donde se va a realizar la operación
+ */
 export default function Settings(){
 
     const [services, setServices] = useState<Service[]>();
     const [viewModal, setViewModal] = useState(false);
     const [modalType, setModalType] = useState(0);
-    const [indexForService, setIndexForService] = useState<IndexForService | null>(null);
+    const [indexForService, setIndexForService] = useState<IndexForService>({i: -1, j: -1});
     const ModalContext = ServicesModalContext;
 
     useEffect(
@@ -29,8 +34,8 @@ export default function Settings(){
     )
 
     return<Container>
-        <ModalContext.Provider value={{viewModal, setViewModal, setIndexForService, modalType, setModalType}}>
-            <ServicesModal services={services}></ServicesModal>
+        <ModalContext.Provider value={{viewModal, setViewModal, indexForService, setIndexForService, modalType, setModalType}}>
+            <ServicesModal services={services} setServices={setServices}></ServicesModal>
             <Grid container justifyContent={'space-between'}>
                 <Grid item style={{color: '#000000', fontSize: '18px', fontWeight: 'bold'}}>EDICIÓN DE CATÁLOGO</Grid>
                 <Grid item>
@@ -56,12 +61,7 @@ interface ServicesContainerProps{
 
 const ServicesContainer: React.FC<ServicesContainerProps> = ({services, setServices}) => {
 
-    const {setIndexForService, setModalType} = useContext(ServicesModalContext);
-
-    const handleAdd = () => {
-        setIndexForService({i:-1, j:-1});
-        setModalType(0);
-    }
+    const {setIndexForService , setModalType, setViewModal} = useContext(ServicesModalContext);
 
     return<div style={{padding: 12, border: 'solid 1px black'}}>
         <Grid container alignContent={'center'} style={{backgroundColor: '#0047BA', color: '#FFFFFF', height:50, paddingLeft: 22}}>
@@ -69,7 +69,7 @@ const ServicesContainer: React.FC<ServicesContainerProps> = ({services, setServi
                 Catálogo de Servicios
             </div>
         </Grid>
-        <div onClick={handleAdd}><AddService></AddService></div>
+        <div onClick={() => initModal(setIndexForService, setModalType, setViewModal, 0)}><AddService></AddService></div>
         <Grid container style={{paddingLeft: 22}}>
             {services && services.map(
                 (s, i) => {

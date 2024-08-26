@@ -9,6 +9,7 @@ import { ServicesModalContext } from '../../context/ServicesModalContext';
 import { Service } from '../../type/Service';
 import { getNextId } from '../../utilities/getNextId';
 import { IndexForService } from '../../type/IndexForService';
+import { actions, createService, getService } from '../../utilities/modal';
 
 
 const style = {
@@ -25,36 +26,35 @@ const style = {
 
 interface ServicesModalProps{
   services: Service[],
+  setServices: React.Dispatch<React.SetStateAction<Service[]>>
 } 
 
-/**
- * mModalType = 0 (create), 1 (edit)
- */
-const ServicesModal:React.FC<ServicesModalProps> = ({services}) => {
+const ServicesModal:React.FC<ServicesModalProps> = ({services, setServices}) => {
   
   const {viewModal, setViewModal, modalType, indexForService} = React.useContext(ServicesModalContext);
 
-  const [service, setService] = React.useState<Service>();
+  const [service, setService] = React.useState<Service>(getService(modalType, indexForService['i'], indexForService['j'], services));
+
+  const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setService({... service, [e.target.name]: e.target.value})
+  }
+
+  const handleButton = () => {
+
+    let buffer: Service[];
+
+    if(modalType == 0){
+      buffer = createService(services, service);
+    }
+
+    setServices(buffer);
+    setViewModal(false);
+  };
 
   React.useEffect(
-
     () => {
-      if(modalType == 0){
-        setService({
-          id: 0,
-          description: '',
-          name: ''
-        })
-      }
-      else{
-        if(indexForService.j == -1){
-          setService(services[indexForService.i]);
-        }
-        else{
-          setService(services[indexForService.i].subServices[indexForService.j]);
-        }
-      }
-    }, []
+      setService(getService(modalType, indexForService['i'], indexForService['j'], services))
+    }, [indexForService]
   )
 
   const handleClose = () => setViewModal(false);
@@ -81,13 +81,16 @@ const ServicesModal:React.FC<ServicesModalProps> = ({services}) => {
         </IconButton>
           <Grid container rowSpacing={3} style={{marginTop: 10}}>
             <Grid container rowSpacing={6}>
-                <Grid item xs={12} justifyContent={'center'} style={{color: '#262626', fontSize: 20, textAlign: 'center'}}>{modalType == 0? 'Agregar categoría - Servicio': 'Editar categoría - Servicio'}</Grid>
+                <Grid item xs={12} justifyContent={'center'} style={{color: '#262626', fontSize: 20, textAlign: 'center'}}>{modalType == 1 || modalType == 2 ? 'Agregar categoría - Servicio': 'Editar categoría - Servicio'}</Grid>
                 <Grid item xs={12}>
                     <TextField
                         required
                         id="outlined-required"
+                        name='name'
+                        value={service.name}
                         label="Nombre"
                         defaultValue=""
+                        onChange={handleInput}
                         style={{width: '100%'}}
                     />
                 </Grid>
@@ -95,6 +98,9 @@ const ServicesModal:React.FC<ServicesModalProps> = ({services}) => {
                     <TextField
                         id="outlined-multiline-static"
                         label="Descripción de la categoría *"
+                        name='description'
+                        value={service.description}
+                        onChange={handleInput}
                         multiline
                         rows={4}
                         defaultValue=""
@@ -104,7 +110,7 @@ const ServicesModal:React.FC<ServicesModalProps> = ({services}) => {
             </Grid>
             <Grid item xs={12}>
                 <Grid container justifyContent={'end'}>
-                    <Button style={{backgroundColor: '#0047BA', fontSize: 12, width: '100px', height: '40px'}} variant="contained">Aceptar</Button>
+                    <Button onClick={handleButton} style={{backgroundColor: '#0047BA', fontSize: 12, width: '100px', height: '40px'}} variant="contained">Aceptar</Button>
                 </Grid>
             </Grid>
           </Grid>
