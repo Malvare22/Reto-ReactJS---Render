@@ -48,6 +48,8 @@ const ServicesModal:React.FC<ServicesModalProps> = ({services, setServices}) => 
     setService({... service, [e.target.name]: e.target.value})
   }
 
+  console.log(service)
+
   const handleButton = () => {
 
     let buffer: Service[];
@@ -72,7 +74,7 @@ const ServicesModal:React.FC<ServicesModalProps> = ({services, setServices}) => 
   React.useEffect(
     () => {
       setService(getService(modalType, indexForService['i'], indexForService['j'], services))
-    }, [indexForService]
+    }, [modalType, indexForService['i'], indexForService['j'], services]
   )
 
   const handleClose = () => setViewModal(false);
@@ -99,7 +101,7 @@ const ServicesModal:React.FC<ServicesModalProps> = ({services, setServices}) => 
         </IconButton>
           <Grid container rowSpacing={3} style={{marginTop: 10}}>
             <Grid container rowSpacing={6}>
-                <Grid item xs={12} justifyContent={'center'} style={{color: '#262626', fontSize: 20, textAlign: 'center'}}>{modalType == 1 || modalType == 2 ? 'Agregar categoría - Servicio': 'Editar categoría - Servicio'}</Grid>
+                <Grid item xs={12} justifyContent={'center'} style={{color: '#262626', fontSize: 20, textAlign: 'center'}}>{(modalType == 0 || modalType == 1 )? 'Agregar categoría - Servicio': 'Editar categoría - Servicio'}</Grid>
                 <Grid item xs={12}>
                     <TextField
                         required

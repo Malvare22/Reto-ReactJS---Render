@@ -16,8 +16,10 @@ export default function LayoutGeneral() {
                 <Aside></Aside>
             </Grid>
             <Grid item xs={10}>
-                <Grid item><Breadcrumb/></Grid>
-                <div style={{padding: 26}}><Outlet/></div>
+                <div style={{padding: 20}}>
+                    <Grid item><Breadcrumb/></Grid>
+                    <div style={{padding: 26}}><Outlet/></div>
+                </div>
             </Grid>
         </Grid>
 </>;

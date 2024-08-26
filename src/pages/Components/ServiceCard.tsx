@@ -17,7 +17,7 @@ interface ServiceCardProps{
     layer: number
 }
 
-export const ServiceCard: React.FC<ServiceCardProps> = ({services, setServices, layer, index, subIndex}) => {
+export const ServiceCard: React.FC<ServiceCardProps> = ({services, setServices, layer, index = -1, subIndex = -1}) => {
 
     const [open, setOpen] = useState(false);
 

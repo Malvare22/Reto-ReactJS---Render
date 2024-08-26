@@ -27,6 +27,8 @@ const serviceTemplate = {
 
 export const getService = (type: number, i?: number, j?: number, services: Service[]): Service | null => {
    
+
+    console.log(type)
     if(type == 0 || type == 1){
         let aux = serviceTemplate;
         aux.id = type == 0 ? getNextId(services) : getNextId(services[i].subServices);
@@ -37,7 +39,7 @@ export const getService = (type: number, i?: number, j?: number, services: Servi
         return services[i];
     }
     
-    if (type == 3) services[i].subServices[j];
+    if (type == 3) return services[i].subServices[j];
 
     return null;
 
@@ -46,6 +48,7 @@ export const getService = (type: number, i?: number, j?: number, services: Servi
 export const createService = (services: Service[], nService: Service) => {
     
     const tmp = [... services];
+    nService.subServices = [];
     tmp.push(nService);
     
     return tmp;
@@ -73,6 +76,7 @@ export const editSubservice = (services: Service[], nSubservice: Service, i: num
     
     const tmp: Service[] = [... services];
     tmp[i].subServices[j] = nSubservice;
+
     return tmp;
 
 }
