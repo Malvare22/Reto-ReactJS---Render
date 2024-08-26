@@ -23,6 +23,7 @@ export default function Settings(){
     const [viewModal, setViewModal] = useState(false);
     const [modalType, setModalType] = useState(-1);
     const [indexForService, setIndexForService] = useState<IndexForService>({i: -1, j: -1});
+    const [modalFileView, setModalFileView] = useState(false);
     const ModalContext = ServicesModalContext;
 
     useEffect(
@@ -35,21 +36,27 @@ export default function Settings(){
         }, []
     )
 
+    const handleOpenFileModal = () => {
+        setModalFileView(true);
+    };
+
     return<Container>
         <ModalContext.Provider value={{viewModal, setViewModal, indexForService, setIndexForService, modalType, setModalType}}>
-            <FileModal services={services} setServices={setServices}/>
+            <FileModal services={services} setServices={setServices} open={modalFileView} setOpen={setModalFileView}/>
             <ServicesModal services={services} setServices={setServices}></ServicesModal>
             <Grid container justifyContent={'space-between'}>
                 <Grid item style={{color: '#000000', fontSize: '18px', fontWeight: 'bold'}}>EDICIÓN DE CATÁLOGO</Grid>
                 <Grid item>
-                    <Grid container style={{color: '#000000', fontSize: '18px', fontWeight: 'bold'}}>
-                        <Grid item style={{cursor: 'pointer'}}>
-                            <AssignmentReturnIcon style={{fill: '#0047BA'}}></AssignmentReturnIcon>
+                    <div onClick={handleOpenFileModal}>
+                        <Grid container style={{color: '#000000', fontSize: '18px', fontWeight: 'bold'}}>
+                            <Grid item style={{cursor: 'pointer'}}>
+                                <AssignmentReturnIcon style={{fill: '#0047BA'}}></AssignmentReturnIcon>
+                            </Grid>
+                            <Grid item style={{cursor: 'pointer'}}>
+                                <SaveOutlinedIcon style={{fill: '#595959'}}></SaveOutlinedIcon>
+                            </Grid>
                         </Grid>
-                        <Grid item style={{cursor: 'pointer'}}>
-                            <SaveOutlinedIcon style={{fill: '#595959'}}></SaveOutlinedIcon>
-                        </Grid>
-                    </Grid>
+                    </div>
                 </Grid>
             </Grid>
             <ServicesContainer services={services} setServices={setServices}></ServicesContainer>

@@ -28,20 +28,15 @@ const style = {
   p: 2,
 };
 
-// interface FileModalProps{
-//     open: boolean,
-//     setOpen: Dispatch.
-// }
-
 interface FileModalProps{
   services: Service[],
   setServices: React.Dispatch<React.SetStateAction<Service[]>>,
+  open: boolean,
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>
 } ;
 
-const FileModal : React.FC<FileModalProps> = ({services, setServices}) => {
+const FileModal : React.FC<FileModalProps> = ({services, setServices, open, setOpen}) => {
   
-  const [open, setOpen] = React.useState(true);
-
   const fileInputRef = React.useRef<HTMLInputElement>(null);
 
   const handleButtonClick = () => {
@@ -94,28 +89,40 @@ const FileModal : React.FC<FileModalProps> = ({services, setServices}) => {
           <CloseIcon />
         </IconButton>
         <Grid container justifyContent={'center'}>
-            <Grid item xs={12} className={styles.tittle}>
-                Importar
+            <Grid item xs={12}>
+              <Grid container>
+                <Grid item xs={12}>
+                  <div className={styles.tittle}>Importar</div>
+                </Grid>
+                <Grid item xs={12}>
+                    <div className={styles.selectFile}>
+                      {<div onClick={handleButtonClick}><InputLayout/></div>}
+                      <Input type='file' inputRef={fileInputRef}
+                        onChange={handleFileChange}
+                        style={{ display: 'none' }}>
+                      </Input>
+                    </div>
+                </Grid>
+                <Grid item xs={12} className={styles.label}>
+                    Descargar plantilla de importación de datos
+                </Grid>
+              </Grid>
             </Grid>
             <Grid item xs={12}>
-                {<div onClick={handleButtonClick}><InputLayout/></div>}
-                <Input type='file' inputRef={fileInputRef}
-                  onChange={handleFileChange}
-                  style={{ display: 'none' }}>
-                </Input>
+                  <Grid container>
+                    <Grid item xs={12}>
+                      <div className={styles.tittle}>Exportar</div>
+                    </Grid>
+                    <Grid item xs={12}>
+                      <div className={styles.downloadFile}>
+                        {<div onClick={handleButtonDownload}><InputLayoutWithIcon/></div>}
+                      </div>
+                    </Grid>
+                  </Grid>
             </Grid>
-            <Grid item xs={12} className={styles.label}>
-                Descargar plantilla de importación de datos
-            </Grid>
-            <Grid item xs={12} style={{marginTop: 20}} className={styles.tittle}>
-                Exportar
-            </Grid>
-            <Grid item xs={12}>
-                {<div onClick={handleButtonDownload}><InputLayoutWithIcon/></div>}
-            </Grid>
-            <div style={{margin: 20}}>
+            <Grid item>
                 {<Button onClick={handleClose} className={styles.button}>Aceptar</Button>}
-            </div>
+            </Grid>
         </Grid>
         </Box>
       </Modal>
