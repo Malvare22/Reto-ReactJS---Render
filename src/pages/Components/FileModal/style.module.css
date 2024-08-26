@@ -13,7 +13,7 @@
 }
 
 .button{
-    background-color: #FFDD00;
+    background-color: #FFDD00 !important;
     color: #0047BA;
     width: 100px;
     height: 40px;

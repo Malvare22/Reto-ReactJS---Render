@@ -13,6 +13,8 @@ import { actions, createService, createSubservice, editService, editSubservice, 
 import InputLayout, { InputLayoutWithIcon } from '../../../components/Inputs/Inputs';
 import styles from './style.module.css'
 import { processCSV } from '../../../utilities/readCSV';
+import { convertToCSV } from '../../../utilities/convertToCSV';
+import { downloadCSV } from '../../../utilities/downloadCSV';
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -67,10 +69,7 @@ const FileModal : React.FC<FileModalProps> = ({services, setServices}) => {
   }
 
   const handleButtonDownload = () => {
-    // const file = event.target.files?.[0];
-    // if (file) {
-    //   console.log('Selected file:', file);
-    // }
+    downloadCSV(convertToCSV(services));
   };
 
   const handleClose = () => setOpen(false);
