@@ -28,8 +28,8 @@ export default function Settings(){
     useEffect(
         () => {
             const f = async () =>{
-                const buffer = await fetchCSV()
-                if(buffer) setServices(buffer.slice(0, 6));
+                // const buffer = await fetchCSV()
+                // if(buffer) setServices(buffer.slice(0, 6));
             }
             f();
         }, []

@@ -6,7 +6,7 @@ export const fetchCSV = async () => {
     return (processCSV(text));
 };
 
-const processCSV = (str: string) => {
+export const processCSV = (str: string) => {
     const rows = str.split('\n');
 
     const data:Service[] = [];

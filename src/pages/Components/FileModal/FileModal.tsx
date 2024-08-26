@@ -12,6 +12,7 @@ import { IndexForService } from '../../../type/IndexForService';
 import { actions, createService, createSubservice, editService, editSubservice, getService } from '../../../utilities/modal';
 import InputLayout, { InputLayoutWithIcon } from '../../../components/Inputs/Inputs';
 import styles from './style.module.css'
+import { processCSV } from '../../../utilities/readCSV';
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -33,9 +34,9 @@ const style = {
 interface FileModalProps{
   services: Service[],
   setServices: React.Dispatch<React.SetStateAction<Service[]>>,
-} 
+} ;
 
-const FileModal: React.FC<FileModalProps> = ({services, setServices}) => {
+const FileModal : React.FC<FileModalProps> = ({services, setServices}) => {
   
   const [open, setOpen] = React.useState(true);
 
@@ -48,9 +49,22 @@ const FileModal: React.FC<FileModalProps> = ({services, setServices}) => {
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
-      console.log('Selected file:', file);
+      console.log(file)
+      const reader = new FileReader();
+
+      reader.onload = (e) => {
+        if (e.target?.result) {
+          setServices(processCSV(e.target.result as string))
+        }
+      };
+
+      reader.onerror = (error) => {
+        console.error('File reading error:', error);
+      };
+
+      reader.readAsText(file);
     }
-  };
+  }
 
   const handleButtonDownload = () => {
     // const file = event.target.files?.[0];
@@ -61,8 +75,7 @@ const FileModal: React.FC<FileModalProps> = ({services, setServices}) => {
 
   const handleClose = () => setOpen(false);
 
-  return (
-    <div>
+  return <div>
       <Modal
         open={open}
         onClose={handleClose}
@@ -107,8 +120,7 @@ const FileModal: React.FC<FileModalProps> = ({services, setServices}) => {
         </Grid>
         </Box>
       </Modal>
-    </div>
-  );
+    </div>;
 }
 
 export default FileModal;
