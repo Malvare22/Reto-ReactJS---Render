@@ -26,7 +26,7 @@ interface OptionProps{
 const Option:React.FC<OptionProps> = ({icon, text}) => {
     return<>
         <Grid item xs={12}>
-            <Grid container className={styles.option} columnSpacing={1} alignContent={'center'} alignItems={'center'} style={{border: '1px solid black', padding: 6}}>
+            <Grid container className={styles.option} columnSpacing={1} alignContent={'center'} alignItems={'center'} style={{padding: 6}}>
                 <Grid item>
                     {icon}
                 </Grid>
