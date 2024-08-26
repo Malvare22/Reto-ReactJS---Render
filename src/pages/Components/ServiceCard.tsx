@@ -5,9 +5,9 @@ import ArrowDropDownOutlinedIcon from '@mui/icons-material/ArrowDropDownOutlined
 import ArrowDropUpOutlinedIcon from '@mui/icons-material/ArrowDropUpOutlined';
 import React, { SetStateAction, useContext, useState } from "react";
 import { Service } from "../../type/Service";
-import { AddService } from "./AddService";
 import { ServicesModalContext } from "../../context/ServicesModalContext";
 import { initModal } from "../../utilities/modal";
+import { PlusService } from "./PlusService";
 
 interface ServiceCardProps{
     index: number,
@@ -89,7 +89,7 @@ export const ServiceCard: React.FC<ServiceCardProps> = ({services, setServices, 
             </Grid>
         </Card>
         {(layer == 0 && open) && <div style={{marginLeft: 22}}>
-            <div onClick={handleAdd}><AddService></AddService></div>
+            <div onClick={handleAdd}><PlusService></PlusService></div>
             {service().subServices?.map(
                 (s, j) => {
                     return <ServiceCard services={services} setServices={setServices} layer={1} index={index} subIndex={j} key={s.id}></ServiceCard>

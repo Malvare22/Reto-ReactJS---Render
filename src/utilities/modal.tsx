@@ -7,7 +7,6 @@ import { getNextId } from "./getNextId";
 /**
  * Modal type [0, 1] = crear. [2, 3] = editar
  */
-
 export const initModal = (setIndexForService: Dispatch<SetStateAction<IndexForService>>,  setModalType:Dispatch<SetStateAction<number>>, setViewModal: Dispatch<SetStateAction<boolean>>, type: number, i=-1, j=-1) => {
     
     setModalType(type);
@@ -21,10 +20,10 @@ export const initModal = (setIndexForService: Dispatch<SetStateAction<IndexForSe
 }
 
 const serviceTemplate = {
-    id: 23,
+    id: -1,
     description: '',
     name: ''
-  };
+};
 
 export const getService = (type: number, i?: number, j?: number, services: Service[]): Service | null => {
    
@@ -78,11 +77,4 @@ export const editSubservice = (services: Service[], nSubservice: Service, i: num
 
 }
 
-// export const a = (services: Service[], nSubservice: Service, i: number, j?: number) => {
-    
-//     const tmp: Service[] = [... services];
-//     (tmp[i]).subServices?.push(nSubservice);
-//     return tmp;
-
-// }
 

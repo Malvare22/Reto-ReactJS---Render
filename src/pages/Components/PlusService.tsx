@@ -3,7 +3,7 @@ import AddIcon from '@mui/icons-material/Add';
 import { useContext } from "react";
 import { ServicesModalContext } from "../../context/ServicesModalContext";
 
-export const AddService = () => {
+export const PlusService = () => {
 
     return <div>
         <Grid container alignItems={'center'} style={{color: '#31C462', height:50, cursor: 'pointer'}}>

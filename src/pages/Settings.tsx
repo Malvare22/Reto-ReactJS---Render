@@ -7,9 +7,9 @@ import { Service } from "../type/Service";
 import { fetchCSV } from "../utilities/readCSV";
 import ServicesModal from "./Components/Modal";
 import { ServicesModalContext } from "../context/ServicesModalContext";
-import { AddService } from "./Components/AddService";
 import { IndexForService } from "../type/IndexForService";
 import { createService, initModal } from "../utilities/modal";
+import { PlusService } from "./Components/PlusService";
 
 /**
  * El parametro type designa el tipo de modal que se va a emplear: 0 (registro) o 1 (editar)
@@ -69,7 +69,7 @@ const ServicesContainer: React.FC<ServicesContainerProps> = ({services, setServi
                 Catálogo de Servicios
             </div>
         </Grid>
-        <div onClick={() => initModal(setIndexForService, setModalType, setViewModal, 0)}><AddService></AddService></div>
+        <div onClick={() => initModal(setIndexForService, setModalType, setViewModal, 0)}><PlusService></PlusService></div>
         <Grid container style={{paddingLeft: 22}}>
             {services && services.map(
                 (s, i) => {
