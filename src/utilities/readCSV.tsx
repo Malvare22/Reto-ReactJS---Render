@@ -13,7 +13,10 @@ export const processCSV = (str: string) => {
     let lastPost = -1;
     rows.slice(1).forEach((row: string, i) => {
       const values = row.split(',');
-      // if(i + 1 < rows.length - 1) return;
+      
+      if(isNaN(parseInt(values[0])) || !values[1] || !values[2]){
+        return;
+      }
 
       let service:Service = {
         id: parseInt(values[0]),
@@ -33,7 +36,7 @@ export const processCSV = (str: string) => {
         data[lastPost].subServices?.push(service);
       }
       
-      
+      // console.log(data)
     });
 
     return data;
