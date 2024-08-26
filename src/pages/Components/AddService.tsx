@@ -5,7 +5,6 @@ import { ServicesModalContext } from "../../context/ServicesModalContext";
 
 export const AddService = () => {
 
-
     return <div>
         <Grid container alignItems={'center'} style={{color: '#31C462', height:50, cursor: 'pointer'}}>
             <Grid item>

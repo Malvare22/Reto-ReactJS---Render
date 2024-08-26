@@ -7,6 +7,7 @@ import React, { SetStateAction, useContext, useState } from "react";
 import { Service } from "../../type/Service";
 import { AddService } from "./AddService";
 import { ServicesModalContext } from "../../context/ServicesModalContext";
+import { initModal } from "../../utilities/modal";
 
 interface ServiceCardProps{
     index: number,
@@ -23,13 +24,16 @@ export const ServiceCard: React.FC<ServiceCardProps> = ({services, setServices, 
     const {setIndexForService, setViewModal, setModalType} = useContext(ServicesModalContext);
 
     const handleAdd = () => {
-        setIndexForService({i:index, j:-1});
+        initModal(setIndexForService, setModalType, setViewModal, 1, index);
     }
 
     const handleEdit = () => {
-        setIndexForService({i:index, j:subIndex});
-        setModalType(1);
-        setViewModal(true);
+        if(layer == 1){
+            initModal(setIndexForService, setModalType, setViewModal, 3, index, subIndex);
+        }
+        else{
+            initModal(setIndexForService, setModalType, setViewModal, 2, index, subIndex);
+        }
     }
 
     const service = () => {
@@ -66,15 +70,15 @@ export const ServiceCard: React.FC<ServiceCardProps> = ({services, setServices, 
                 <Grid item>
                     <Grid container justifyContent={'space-between'} columnSpacing={1}>
                         <Grid item>
-                            <div onClick={handleEdit}>
+                            <div style={{cursor: 'pointer'}} onClick={handleEdit}>
                                 <EditOutlinedIcon></EditOutlinedIcon>
                             </div>
                         </Grid>
                         <Grid item>
-                            <div onClick={handleRemove}><PowerSettingsNewIcon></PowerSettingsNewIcon></div>
+                            <div style={{cursor: 'pointer'}} onClick={handleRemove}><PowerSettingsNewIcon></PowerSettingsNewIcon></div>
                         </Grid>
                         {layer == 0 && <Grid item>
-                            <div onClick={handleOpen}>
+                            <div onClick={handleOpen} style={{cursor: 'pointer'}}>
                                 {
                                     open ? <ArrowDropDownOutlinedIcon/> : <ArrowDropUpOutlinedIcon/>
                                 }

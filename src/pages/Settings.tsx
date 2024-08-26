@@ -17,9 +17,9 @@ import { createService, initModal } from "../utilities/modal";
  */
 export default function Settings(){
 
-    const [services, setServices] = useState<Service[]>();
+    const [services, setServices] = useState<Service[]>([]);
     const [viewModal, setViewModal] = useState(false);
-    const [modalType, setModalType] = useState(0);
+    const [modalType, setModalType] = useState(-1);
     const [indexForService, setIndexForService] = useState<IndexForService>({i: -1, j: -1});
     const ModalContext = ServicesModalContext;
 

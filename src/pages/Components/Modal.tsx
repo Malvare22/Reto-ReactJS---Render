@@ -9,7 +9,7 @@ import { ServicesModalContext } from '../../context/ServicesModalContext';
 import { Service } from '../../type/Service';
 import { getNextId } from '../../utilities/getNextId';
 import { IndexForService } from '../../type/IndexForService';
-import { actions, createService, getService } from '../../utilities/modal';
+import { actions, createService, createSubservice, editService, editSubservice, getService } from '../../utilities/modal';
 
 
 const style = {
@@ -26,14 +26,23 @@ const style = {
 
 interface ServicesModalProps{
   services: Service[],
-  setServices: React.Dispatch<React.SetStateAction<Service[]>>
+  setServices: React.Dispatch<React.SetStateAction<Service[]>>,
 } 
 
+
+/**
+ * 
+ * types: 
+ * 1. Create service
+ * 2. Create subService
+ * 3. Edit service
+ * 4. Edit subService
+ */
 const ServicesModal:React.FC<ServicesModalProps> = ({services, setServices}) => {
   
   const {viewModal, setViewModal, modalType, indexForService} = React.useContext(ServicesModalContext);
 
-  const [service, setService] = React.useState<Service>(getService(modalType, indexForService['i'], indexForService['j'], services));
+  const [service, setService] = React.useState<Service | null>(null);
 
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setService({... service, [e.target.name]: e.target.value})
@@ -45,6 +54,15 @@ const ServicesModal:React.FC<ServicesModalProps> = ({services, setServices}) => 
 
     if(modalType == 0){
       buffer = createService(services, service);
+    }
+    else if(modalType == 1){
+      buffer = createSubservice(services, service, indexForService['i']);
+    }
+    else if(modalType == 2){
+      buffer = editService(services, service, indexForService['i']);
+    }
+    else if(modalType == 3){
+      buffer = editSubservice(services, service, indexForService['i'], indexForService['j']);
     }
 
     setServices(buffer);
@@ -87,7 +105,7 @@ const ServicesModal:React.FC<ServicesModalProps> = ({services, setServices}) => 
                         required
                         id="outlined-required"
                         name='name'
-                        value={service.name}
+                        value={service?.name}
                         label="Nombre"
                         defaultValue=""
                         onChange={handleInput}
@@ -99,7 +117,7 @@ const ServicesModal:React.FC<ServicesModalProps> = ({services, setServices}) => 
                         id="outlined-multiline-static"
                         label="Descripción de la categoría *"
                         name='description'
-                        value={service.description}
+                        value={service?.description}
                         onChange={handleInput}
                         multiline
                         rows={4}
