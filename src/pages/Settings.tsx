@@ -12,6 +12,7 @@ import { createService, initModal } from "../utilities/modal";
 import { PlusService } from "./Components/PlusService";
 import Breadcrumb from "./Components/Breadcrumb";
 import FileModal from "./Components/FileModal/FileModal";
+import styles from './styles.module.css'
 
 /**
  * El parametro type designa el tipo de modal que se va a emplear: 0 (registro) o 1 (editar)
@@ -45,14 +46,14 @@ export default function Settings(){
             <FileModal services={services} setServices={setServices} open={modalFileView} setOpen={setModalFileView}/>
             <ServicesModal services={services} setServices={setServices}></ServicesModal>
             <Grid container justifyContent={'space-between'}>
-                <Grid item style={{color: '#000000', fontSize: '18px', fontWeight: 'bold'}}>EDICIÓN DE CATÁLOGO</Grid>
+                <Grid item className={styles.tittle}>EDICIÓN DE CATÁLOGO</Grid>
                 <Grid item>
                     <div onClick={handleOpenFileModal}>
-                        <Grid container style={{color: '#000000', fontSize: '18px', fontWeight: 'bold'}}>
-                            <Grid item style={{cursor: 'pointer'}}>
+                        <Grid container>
+                            <Grid item className={styles.pointer}>
                                 <AssignmentReturnIcon style={{fill: '#0047BA'}}></AssignmentReturnIcon>
                             </Grid>
-                            <Grid item style={{cursor: 'pointer'}}>
+                            <Grid item className={styles.pointer}>
                                 <SaveOutlinedIcon style={{fill: '#595959'}}></SaveOutlinedIcon>
                             </Grid>
                         </Grid>
@@ -74,7 +75,7 @@ const ServicesContainer: React.FC<ServicesContainerProps> = ({services, setServi
     const {setIndexForService , setModalType, setViewModal} = useContext(ServicesModalContext);
 
     return<div style={{padding: 12, backgroundColor: '#FFFFFF'}}>
-        <Grid container alignContent={'center'} style={{backgroundColor: '#0047BA', color: '#FFFFFF', height:50, paddingLeft: 22}}>
+        <Grid container alignContent={'center'} className={styles.servicesTittle}>
             <div>
                 Catálogo de Servicios
             </div>

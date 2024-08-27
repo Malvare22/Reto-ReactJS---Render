@@ -7,7 +7,7 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 export default function Header(){
 
     return <>
-    <Grid container style={{padding: 6, backgroundColor: '#FFFFFF'}} justifyContent={'space-between'} alignContent={'center'}>
+    <Grid container className={styles.container} justifyContent={'space-between'} alignContent={'center'}>
         <Grid item alignContent={'center'}>
             <Grid container spacing={2}>
                 <Grid item>
@@ -22,17 +22,17 @@ export default function Header(){
             <Grid container justifyContent={'end'} spacing={1}>
                 <Grid item xs={8} alignContent={'center'}>
                     <Grid container>
-                        <Grid item xs={12} style={{color: '#0047BA', fontSize: '16px', textAlign: 'end'}}>
+                        <Grid item xs={12} className={styles.txt1}>
                             Macropayer Pedro Solar
                         </Grid>
-                        <Grid item xs={12} style={{color: '#4B5468', fontSize: '14px', textAlign: 'end'}}>
+                        <Grid item xs={12} className={styles.txt2}>
                             CORP4-AVMEJIA
                         </Grid>
                     </Grid>
                 </Grid>
                 <Grid item xs={2} alignContent={'center'}>
                     <Grid container justifyContent={'center'}>
-                        <AccountCircleIcon style={{fill:'#31C462', width:40, height: 40}}></AccountCircleIcon>
+                        <div className={styles.svg}><AccountCircleIcon></AccountCircleIcon></div>
                     </Grid>
                 </Grid>
             </Grid>

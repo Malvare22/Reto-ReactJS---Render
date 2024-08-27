@@ -11,3 +11,28 @@
         width: 32px;
     }
 }
+
+.container{
+    padding: 6px;
+    background-color: #FFFFFF;
+}
+
+.txt1{
+    color: #0047BA;
+    font-size: 16px; 
+    text-align: end;
+}
+
+.txt2{
+    color: #4B5468; 
+    font-size: 14px; 
+    text-align: end;
+}
+
+.svg{
+    svg{
+        fill:#31C462;
+        width: 40px;
+        height: 40px;
+    }
+}
